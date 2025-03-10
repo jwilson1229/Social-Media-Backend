@@ -4,7 +4,7 @@ import Thought from '../../models/Thoughts';
 
 const router = express.Router();
 
-// GET all users
+
 router.get('/', async (_req: Request, res: Response) => {
   try {
     const users = await User.find();
@@ -15,7 +15,7 @@ router.get('/', async (_req: Request, res: Response) => {
   }
 });
 
-// GET single user by id
+
 router.get('/:id', async (req: Request, res: Response):Promise<any> => {
   try {
     const user = await User.findById(req.params.id)
@@ -33,7 +33,7 @@ router.get('/:id', async (req: Request, res: Response):Promise<any> => {
   }
 });
 
-// POST a new user
+
 router.post('/', async (req: Request, res: Response) => {
   try {
     const user = new User(req.body);
@@ -45,7 +45,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// PUT to update user by id
+
 router.put('/:id', async (req: Request, res: Response):Promise<any> => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -61,7 +61,7 @@ router.put('/:id', async (req: Request, res: Response):Promise<any> => {
   }
 });
 
-// DELETE user by id
+
 router.delete('/:id', async (req: Request, res: Response):Promise<any> => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);

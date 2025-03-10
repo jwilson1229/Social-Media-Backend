@@ -14,13 +14,13 @@ const userSchema = new Schema<IUser>(
             type: String,
             unique: true,
             required: true,
-            trim: true, // Fixed typo
+            trim: true, 
         },
         email: {
             type: String,
             required: true,
             unique: true,
-            match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address"], // Added email validation
+            match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address"], 
         },
         thoughts: [
             {

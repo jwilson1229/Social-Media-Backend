@@ -4,7 +4,7 @@ import User from '../../models/User';
 
 const router = express.Router();
 
-// GET all thoughts
+
 router.get('/', async (_req: Request, res: Response) => {
   try {
     const thoughts = await Thought.find();
@@ -14,7 +14,7 @@ router.get('/', async (_req: Request, res: Response) => {
   }
 });
 
-// GET a single thought by id
+
 router.get('/:id', async (req: Request, res: Response):Promise<any> => {
   try {
     const thought = await Thought.findById(req.params.id).populate('reactions');
@@ -29,13 +29,13 @@ router.get('/:id', async (req: Request, res: Response):Promise<any> => {
   }
 });
 
-// POST to create a new thought
+
 router.post('/', async (req: Request, res: Response) => {
   try {
     const thought = new Thought(req.body);
     await thought.save();
 
-    // Add thought to user's thoughts array
+    
     await User.findByIdAndUpdate(req.body.userId, { $push: { thoughts: thought._id } });
 
     res.status(201).json(thought);
@@ -44,7 +44,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// PUT to update a thought by id
+
 router.put('/:id', async (req: Request, res: Response): Promise<any> => {
   try {
     const thought = await Thought.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -59,7 +59,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<any> => {
   }
 });
 
-// DELETE a thought by id
+
 router.delete('/:id', async (req: Request, res: Response): Promise<any> => {
   try {
     const thought = await Thought.findByIdAndDelete(req.params.id);
