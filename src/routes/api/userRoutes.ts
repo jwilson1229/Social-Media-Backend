@@ -1,82 +1,19 @@
-import express, { Request, Response } from 'express';
-import User from '../../models/User';
-import Thought from '../../models/Thoughts';
+import { Router } from 'express';
+import userController from '../../controllers/userController';
 
-const router = express.Router();
+const router = Router();
 
+router.route('/')
+  .get(userController.getAllUsers)
+  .post(userController.createUser);
 
-router.get('/', async (_req: Request, res: Response) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching users'});
-  }
-});
+router.route('/:id')
+  .get(userController.getUserById)
+  .put(userController.updateUser)
+  .delete(userController.deleteUser);
 
-
-router.get('/:id', async (req: Request, res: Response):Promise<any> => {
-  try {
-    const user = await User.findById(req.params.id)
-      .populate('thoughts')
-      .populate('friends');
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching user'});
-  }
-});
-
-
-router.post('/', async (req: Request, res: Response) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error creating user'});
-  }
-});
-
-
-router.put('/:id', async (req: Request, res: Response):Promise<any> => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error updating user'});
-  }
-});
-
-
-router.delete('/:id', async (req: Request, res: Response):Promise<any> => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    await Thought.deleteMany({ username: user.username }); 
-
-    res.json({ message: 'User deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error deleting user'});
-  }
-});
+router.route('/:userId/friends/:friendId')
+  .post(userController.addFriend)
+  .delete(userController.removeFriend);
 
 export default router;

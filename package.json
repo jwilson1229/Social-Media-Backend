@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node dist/server.js",
-  "dev": "nodemon src/server.ts"
+  "start": "node dist/server.ts",
+  "dev": "nodemon src/server.ts",
+  "seed": "node seeds/seeds.ts"
 },
   "keywords": [],
   "author": "",

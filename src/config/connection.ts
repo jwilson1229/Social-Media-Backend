@@ -11,6 +11,6 @@ mongoose.connect(MONGO_URI);
 const db = mongoose.connection;
 
 db.on("error", (err) => console.error("Connection Error:", err));
-db.once("open", () => console.log("✅ Connection Success!"));
+db.once("open", () => console.log("Connection Success!"));
 
 export default db;

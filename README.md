@@ -61,3 +61,6 @@ Make sure you have the following installed:
    ```bash
    git clone https://github.com/your-username/social-media-api.git
    cd social-media-api
+
+## Video
+https://www.loom.com/share/115bfe3c4017430591d0e5ac5284978f
